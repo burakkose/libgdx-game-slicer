@@ -27,14 +27,13 @@ public class MainMenuScreen extends InputAdapter implements Screen {
 
     private OrthographicCamera cam;
 
-    private float fcx1, fcx2, fcy1, fcy2;
-    private GlyphLayout layout1, layout2;
+    private float fcx1, fcy1;
+    private GlyphLayout layout1;
 
     public MainMenuScreen(SlicerGame game) {
         this.game = game;
         font = new BitmapFont();
         layout1 = new GlyphLayout();
-        layout2 = new GlyphLayout();
         batcher = new SpriteBatch();
 
         cam = new OrthographicCamera(320, 480);
@@ -50,10 +49,6 @@ public class MainMenuScreen extends InputAdapter implements Screen {
         layout1.setText(font, "Tap the screen to play");
         fcx1 = Gdx.graphics.getWidth() / 2 - layout1.width / 2;
         fcy1 = 3 * Gdx.graphics.getHeight() / 4 - layout1.height / 2;
-
-        layout2.setText(font, "120202063 - Mert Esen" + "\n120202052 - Burak Köse");
-        fcx2 = Gdx.graphics.getWidth() / 2 - layout2.width / 2;
-        fcy2 = 0 + layout2.height * 1.5f;
 
         Gdx.input.setInputProcessor(this);
 
@@ -71,7 +66,6 @@ public class MainMenuScreen extends InputAdapter implements Screen {
         bg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         bg.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         font.draw(batcher, layout1, fcx1, fcy1);
-        font.draw(batcher, layout2, fcx2, fcy2);
         batcher.draw(AssetLoader.sound ? AssetLoader.soundOn : AssetLoader.soundOff, 0, 0, 64, 64);
         batcher.end();
     }
@@ -101,7 +95,8 @@ public class MainMenuScreen extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-
+        font.dispose();
+        batcher.dispose();
     }
 
     @Override
