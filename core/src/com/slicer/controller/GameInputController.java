@@ -47,25 +47,24 @@ public class GameInputController extends InputAdapter {
         @Override
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
             //We can just slice the field and field is ChainShape
-            if (!(fixture.getShape() instanceof ChainShape))
-                return -1;
+            if (fixture.getShape() instanceof ChainShape) {
 
-            Body body = fixture.getBody();
-            List<Vector2> pointVec = rayCastMap.get(body);
+                Body body = fixture.getBody();
+                List<Vector2> pointVec = rayCastMap.get(body);
 
-            if (pointVec == null) {
-                pointVec = new ArrayList<Vector2>();
-                rayCastMap.put(body, pointVec);
+                if (pointVec == null) {
+                    pointVec = new ArrayList<Vector2>();
+                    rayCastMap.put(body, pointVec);
+                }
+
+                if (!pointVec.isEmpty() && !pointVec.get(0).equals(point)) {
+                    pointVec.add(point.cpy());
+                    splitObj(body, pointVec);
+                } else {
+                    pointVec.add(point.cpy());
+                }
             }
-
-            if (!pointVec.isEmpty() && !pointVec.get(0).equals(point)) {
-                pointVec.add(point.cpy());
-                splitObj(body, pointVec);
-            } else {
-                pointVec.add(point.cpy());
-            }
-
-            return -1;
+            return 1;
         }
     };
 
