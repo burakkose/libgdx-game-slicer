@@ -240,8 +240,9 @@ public class GameInputController extends InputAdapter {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         box2dWorld.setContactListener(null);
-        if (!flag)
+        if (!flag && !p1.equals(p2)) {
             box2dWorld.rayCast(callback, p1, p2);
+        }
         //box2dWorld.rayCast(callback, p2, p1);
         flag = false;
         p1.setZero();
